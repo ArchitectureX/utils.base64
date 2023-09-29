@@ -11,7 +11,7 @@ This utility module offers easy-to-use methods for encoding and decoding data to
 ### Usage
 
 ```javascript
-import base64 from '@architecturex/utils.bas64'
+import base64 from '@architecturex/utils.base64'
 ```
 
 #### Encoding

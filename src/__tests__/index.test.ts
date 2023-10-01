@@ -8,11 +8,34 @@ describe('security', () => {
       expect(security.string.code(10).length).toBe(10)
       expect(security.string.code(5).length).toBe(5)
     })
+  })
 
+  describe('input', () => {
     it('sanitizes strings', () => {
-      expect(security.string.sanitize('<script>alert("test")</script>')).toBe(
+      expect(security.input.sanitize('<script>alert("test")</script>')).toBe(
         '&lt;script&gt;alert(&quot;test&quot;)&lt;/script&gt;'
       )
+    })
+
+    describe('validate', () => {
+      it('should validate strings correctly', () => {
+        expect(security.input.validate('Hello').is('string')).toBe(true)
+        expect(security.input.validate(12345).is('string')).toBe(false)
+      })
+
+      it('should validate numbers correctly', () => {
+        expect(security.input.validate(12345).is('number')).toBe(true)
+        expect(security.input.validate('12345').is('number')).toBe(false)
+      })
+
+      it('should detect empty values', () => {
+        expect(security.input.validate({ name: 'John' }).is('empty')).toBe(false)
+        expect(security.input.validate({}).is('empty')).toBe(true)
+        expect(security.input.validate([1, 2, 3]).is('empty')).toBe(false)
+        expect(security.input.validate([]).is('empty')).toBe(true)
+        expect(security.input.validate('Hello').is('empty')).toBe(false)
+        expect(security.input.validate('').is('empty')).toBe(true)
+      })
     })
   })
 

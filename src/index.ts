@@ -65,37 +65,33 @@ const security = {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;')
     },
-    validate: (value: any) => ({
-      is: (type: string) => {
-        if (type === 'string') {
-          return typeof value === 'string'
+    is: (value: any) => ({
+      empty() {
+        if (typeof value === 'string') {
+          return value === ''
         }
 
-        if (type === 'number') {
-          return typeof value === 'number'
+        if (Array.isArray(value)) {
+          return value.length === 0
         }
 
-        if (type === 'empty') {
-          if (typeof value === 'string') {
-            return value === ''
-          }
+        if (typeof value === 'object' && Object.keys(value).length === 0) {
+          return true
+        }
 
-          if (Array.isArray(value)) {
-            return value.length === 0
-          }
-
-          if (typeof value === 'object' && Object.keys(value).length === 0) {
+        for (const key in value) {
+          if (value[key] === '' || !value[key]) {
             return true
-          }
-
-          for (const key in value) {
-            if (value[key] === '' || !value[key]) {
-              return true
-            }
           }
         }
 
         return false
+      },
+      string() {
+        return typeof value === 'string'
+      },
+      number() {
+        return typeof value === 'number'
       }
     })
   },

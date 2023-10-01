@@ -17,24 +17,24 @@ describe('security', () => {
       )
     })
 
-    describe('validate', () => {
+    describe('is', () => {
       it('should validate strings correctly', () => {
-        expect(security.input.validate('Hello').is('string')).toBe(true)
-        expect(security.input.validate(12345).is('string')).toBe(false)
+        expect(security.input.is('Hello').string()).toBe(true)
+        expect(security.input.is(12345).string()).toBe(false)
       })
 
       it('should validate numbers correctly', () => {
-        expect(security.input.validate(12345).is('number')).toBe(true)
-        expect(security.input.validate('12345').is('number')).toBe(false)
+        expect(security.input.is(12345).number()).toBe(true)
+        expect(security.input.is('12345').number()).toBe(false)
       })
 
       it('should detect empty values', () => {
-        expect(security.input.validate({ name: 'John' }).is('empty')).toBe(false)
-        expect(security.input.validate({}).is('empty')).toBe(true)
-        expect(security.input.validate([1, 2, 3]).is('empty')).toBe(false)
-        expect(security.input.validate([]).is('empty')).toBe(true)
-        expect(security.input.validate('Hello').is('empty')).toBe(false)
-        expect(security.input.validate('').is('empty')).toBe(true)
+        expect(security.input.is({ name: 'John' }).empty()).toBe(false)
+        expect(security.input.is({}).empty()).toBe(true)
+        expect(security.input.is([1, 2, 3]).empty()).toBe(false)
+        expect(security.input.is([]).empty()).toBe(true)
+        expect(security.input.is('Hello').empty()).toBe(false)
+        expect(security.input.is('').empty()).toBe(true)
       })
     })
   })

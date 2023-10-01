@@ -15,6 +15,9 @@ A utility library to aid in various common security-related tasks. This library 
 - **Password Utilities:** Includes validation, matching, and encryption.
 - **CSP Generator:** Helps in creating Content Security Policy directives.
 - **Data Masking:** Mask email, phone, and generic text to protect sensitive data.
+- **String Sanitization:** Protect your application against XSS attacks by sanitizing user input.
+- **Type-based Validation:** Check if the provided input matches the expected type such as string or number.
+- **Empty Check:** Quickly determine if a given input is empty.
 
 ### Usage
 
@@ -30,11 +33,36 @@ Generate a random string:
 security.string.code(10) // Outputs: 'A4D2efG7H8'
 ```
 
+### Input Utilities
+
 Sanitize a string:
 
 ```javascript
 security.string.sanitize('<script>alert("hacked")</script>')
 // Outputs: '&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;'
+```
+
+Check if a value is string:
+
+```javascript
+security.input.is('').string()
+```
+
+Check if a value is number
+
+```javascript
+security.input.is(12345).number()
+```
+
+Check if a value is empty
+
+```javascript
+security.input.is({ name: 'John' }).empty() // Outputs: false
+security.input.is({}).empty() // Outputs: true
+security.input.is([1, 2, 3]).empty() // Outputs: false
+security.input.is([]).empty() // Outputs: true
+security.input.is('Hello').empty() // Outputs: false
+security.input.is('').empty() // Outputs: true
 ```
 
 #### Base64 Encoding & Decoding

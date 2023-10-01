@@ -1,6 +1,6 @@
 {
-  "name": "@architecturex/utils.base64",
-  "version": "1.0.2",
+  "name": "@architecturex/utils.security",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -16,6 +16,7 @@
   "keywords": [
     "typescript",
     "utils",
+    "security",
     "base64",
     "decode",
     "encode"

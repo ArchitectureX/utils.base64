@@ -1,55 +1,111 @@
-# @architecturex/utils.base64
+# @architecturex/utils.security
 
-## base64
+## security
 
-This utility module offers easy-to-use methods for encoding and decoding data to and from Base64, with special handling for JSON strings.
+A utility library to aid in various common security-related tasks. This library includes functions for string sanitization, password validation, CSP generation, base64, data masking, and more.
 
 ### Installation
 
-`npm install @architecturex/utils.base64`
+`npm install @architecturex/utils.security`
+
+### Features
+
+- **String Utilities:** Generate random codes and sanitize input strings.
+- **Base64 Encoding & Decoding:** Convert data between Base64 and other formats.
+- **Password Utilities:** Includes validation, matching, and encryption.
+- **CSP Generator:** Helps in creating Content Security Policy directives.
+- **Data Masking:** Mask email, phone, and generic text to protect sensitive data.
 
 ### Usage
 
 ```javascript
-import base64 from '@architecturex/utils.base64'
+import security from '@architecturex/utils.security'
 ```
 
-#### Encoding
+#### String Utilities
 
-To encode a string or an object:
+Generate a random string:
 
 ```javascript
-// Returns a Base64 encoded string
-const encodedString = base64.set('Hello World')
-
-// Returns a Base64 encoded string of the JSON representation
-const obj = { key: 'value' }
-const encodedObj = base64.set(obj)
+security.string.code(10) // Outputs: 'A4D2efG7H8'
 ```
 
-#### Decoding
-
-To decode a Base64 encoded string:
+Sanitize a string:
 
 ```javascript
-// Returns the original string
-const decodedString = base64.get(encodedString)
-
-// Returns the original object
-const decodedObj = base64.get(encodedObj)
+security.string.sanitize('<script>alert("hacked")</script>')
+// Outputs: '&lt;script&gt;alert(&quot;hacked&quot;)&lt;/script&gt;'
 ```
 
-### Behavior
+#### Base64 Encoding & Decoding
 
-- The `get` method:
-  - Decodes a Base64 encoded string.
-  - If the decoded value is a JSON string, it parses and returns the corresponding object.
-  - Returns an empty string for non-string values.
-- The `set` method:
-  - Encodes a string to Base64.
-  - If given an object, it stringifies the object and encodes the resulting JSON string to Base64.
-  - Returns `null` for non-string, non-object values.
+Encode a string or object to Base64:
+
+```javascript
+security.base64.encode('Hello World') // Outputs: 'SGVsbG8gV29ybGQ='
+security.base64.encode({ msg: 'Hello World' }) // Outputs: 'eyJtc2ciOiAiSGVsbG8gV29ybGQifQ=='
+```
+
+Decode from Base64:
+
+```javascript
+security.base64.decode('SGVsbG8gV29ybGQ=') // Outputs: 'Hello World'
+```
+
+### Password Utilities
+
+Validate a password:
+
+```javascript
+security.password.validation('Passw0rd!', { length: 8, special: true })
+// Outputs: { isValid: true, reasons: [] }
+```
+
+Check if passwords match and are valid:
+
+```javascript
+security.password.match('Passw0rd!', 'Passw0rd!') // Outputs: true
+```
+
+Encrypt a password:
+
+```javascript
+security.password.encrypt('password') // Outputs: 'sha1 hash'
+```
+
+### CSP Generator
+
+Generate a Content Security Policy:
+
+```javascript
+const config = {
+  'default-src': ["'self'", 'cdn.example.com'],
+  'script-src': ["'self'", 'scripts.example.com']
+}
+security.csp.generator(config)
+// Outputs: "default-src 'self' cdn.example.com; script-src 'self' scripts.example.com"
+```
+
+### Data Masking
+
+Mask an email:
+
+```javascript
+security.mask.email('test@example.com') // Outputs: 'tes*****@ex*****.com'
+```
+
+Mask a phone number:
+
+```javascript
+security.mask.phone('1234567890') // Outputs: 'xxxxx67890'
+```
+
+Mask text:
+
+```javascript
+security.mask.text('testingtesting', 2, 2) // Outputs: 'te*******ng'
+```
 
 ### Contribution
 
-Feel free to suggest improvements, report issues, or contribute to enhancing this utility. Your feedback and contributions are welcome!
+Feel free to suggest improvements, report issues, or contribute to enhancing these utilities. Your feedback and contributions are welcome!

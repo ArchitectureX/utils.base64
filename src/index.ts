@@ -64,36 +64,7 @@ const security = {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;')
-    },
-    is: (value: any) => ({
-      empty() {
-        if (typeof value === 'string') {
-          return value === ''
-        }
-
-        if (Array.isArray(value)) {
-          return value.length === 0
-        }
-
-        if (typeof value === 'object' && Object.keys(value).length === 0) {
-          return true
-        }
-
-        for (const key in value) {
-          if (value[key] === '' || !value[key]) {
-            return true
-          }
-        }
-
-        return false
-      },
-      string() {
-        return typeof value === 'string'
-      },
-      number() {
-        return typeof value === 'number'
-      }
-    })
+    }
   },
   base64: {
     encode(value: any) {

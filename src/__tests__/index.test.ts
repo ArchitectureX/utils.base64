@@ -16,27 +16,6 @@ describe('security', () => {
         '&lt;script&gt;alert(&quot;test&quot;)&lt;/script&gt;'
       )
     })
-
-    describe('is', () => {
-      it('should validate strings correctly', () => {
-        expect(security.input.is('Hello').string()).toBe(true)
-        expect(security.input.is(12345).string()).toBe(false)
-      })
-
-      it('should validate numbers correctly', () => {
-        expect(security.input.is(12345).number()).toBe(true)
-        expect(security.input.is('12345').number()).toBe(false)
-      })
-
-      it('should detect empty values', () => {
-        expect(security.input.is({ name: 'John' }).empty()).toBe(false)
-        expect(security.input.is({}).empty()).toBe(true)
-        expect(security.input.is([1, 2, 3]).empty()).toBe(false)
-        expect(security.input.is([]).empty()).toBe(true)
-        expect(security.input.is('Hello').empty()).toBe(false)
-        expect(security.input.is('').empty()).toBe(true)
-      })
-    })
   })
 
   describe('base64', () => {

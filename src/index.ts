@@ -1,4 +1,4 @@
-import isJSON from '@architecturex/utils.isjson'
+import is from '@architecturex/utils.is'
 import crypto from 'crypto'
 
 type PasswordOptions = {
@@ -81,7 +81,7 @@ const security = {
         buffer = Buffer.from(value, 'base64').toString('ascii')
       }
 
-      if (isJSON(buffer)) {
+      if (is(buffer).json()) {
         buffer = JSON.parse(Buffer.from(value, 'base64').toString('ascii'))
       }
 

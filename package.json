@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@architecturex/devtools": "1.0.8",
-    "@architecturex/utils.isjson": "^1.0.2",
+    "@architecturex/utils.is": "^1.0.2",
     "ts-loader": "^9.4.4",
     "webpack": "^5.88.2",
     "webpack-bundle-analyzer": "^4.9.1",

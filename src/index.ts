@@ -141,12 +141,16 @@ const security = {
 
       return errors
     },
-    match(p1: string, p2: string): boolean {
-      return (
-        security.password.validation(p1).isValid &&
-        security.password.validation(p2).isValid &&
-        p1 === p2
-      )
+    match(p1: string, p2: string, allowWeekPassword = false): ValidationResult {
+      if (!allowWeekPassword && !security.password.validation(p1).isValid) {
+        return security.password.validation(p1)
+      }
+
+      if (!allowWeekPassword && !security.password.validation(p2).isValid) {
+        return security.password.validation(p2)
+      }
+
+      return p1 === p2 ? { isValid: true } : { isValid: false }
     },
     encrypt(str: string): string {
       return crypto.createHash('sha1').update(str.toString()).digest('hex')

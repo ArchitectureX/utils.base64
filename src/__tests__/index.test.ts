@@ -107,20 +107,30 @@ describe('security', () => {
     })
 
     it('should match two strong identical passwords', () => {
-      expect(security.password.match('StrongPass123!', 'StrongPass123!')).toBe(true)
+      const result = security.password.match('StrongPass123!', 'StrongPass123!')
+      expect(result.isValid).toBe(true)
     })
 
     it('should not match two different passwords', () => {
-      expect(security.password.match('StrongPass123!', 'DifferentPass456!')).toBe(false)
+      const result = security.password.match('StrongPass123!', 'DifferentPass456!')
+      expect(result.isValid).toBe(false)
     })
 
     it('should not match if one of the passwords is weak', () => {
-      expect(security.password.match('StrongPass123!', 'weakpass')).toBe(false)
+      const result = security.password.match('StrongPass123!', 'weakpass')
+      expect(result.isValid).toBe(false)
     })
 
     it('should not match if both passwords are weak', () => {
-      expect(security.password.match('weakpass1', 'weakpass1')).toBe(false)
+      const result = security.password.match('weakpass1', 'weakpass1')
+      expect(result.isValid).toBe(false)
     })
+
+    it('should match if both passwords are weak and flag is passed', () => {
+      const result = security.password.match('weakpass1', 'weakpass1', true)
+      expect(result.isValid).toBe(true)
+    })
+
 
     it('encrypts password correctly', () => {
       const encrypted = security.password.encrypt('password')

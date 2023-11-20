@@ -43,26 +43,6 @@ type CspConfig = {
   [directive in CspDirective]?: string[]
 }
 
-function switchCase(input: string): string {
-  let result = '';
-
-  for (const char of input) {
-      if (char >= 'a' && char <= 'z') {
-          result += char.toUpperCase();
-      } else if (char >= 'A' && char <= 'Z') {
-          result += char.toLowerCase();
-      } else {
-          result += char;
-      }
-  }
-
-  return result;
-}
-
-function reverseSwitchCase(input: string): string {
-  return switchCase(input);
-}
-
 const security = {
   string: {
     code(length: number): string {
@@ -74,6 +54,24 @@ const security = {
       }
 
       return result
+    },
+    obfuscate(input: string): string {
+      let result = '';
+
+      for (const char of input) {
+          if (char >= 'a' && char <= 'z') {
+              result += char.toUpperCase();
+          } else if (char >= 'A' && char <= 'Z') {
+              result += char.toLowerCase();
+          } else {
+              result += char;
+          }
+      }
+
+      return result;
+    },
+    deobfuscate(input: string): string {
+      return this.obfuscate(input);
     }
   },
   input: {
@@ -92,7 +90,7 @@ const security = {
         const base64String = Buffer.from(JSON.stringify(value)).toString('base64')
 
         if (obfuscate) {
-          return switchCase(base64String)
+          return security.string.obfuscate(base64String)
         }
 
         return base64String
@@ -100,7 +98,7 @@ const security = {
 
       if (typeof value === 'string') {
         if (obfuscate) {
-          return switchCase(Buffer.from(value).toString('base64'))
+          return security.string.obfuscate(Buffer.from(value).toString('base64'))
         }
 
         return Buffer.from(value).toString('base64')
@@ -113,7 +111,7 @@ const security = {
 
       if (typeof value === 'string') {
         if (isObfuscated) {
-          value = reverseSwitchCase(value)
+          value = security.string.deobfuscate(value)
         }
 
 

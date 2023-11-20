@@ -46,7 +46,7 @@ type CspConfig = {
 function switchCase(input: string): string {
   let result = '';
 
-  for (let char of input) {
+  for (const char of input) {
       if (char >= 'a' && char <= 'z') {
           result += char.toUpperCase();
       } else if (char >= 'A' && char <= 'Z') {

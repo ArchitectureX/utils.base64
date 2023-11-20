@@ -33,9 +33,9 @@ describe('security', () => {
       expect(result).toBe(expected)
     })
 
-    it('should return null for non-string, non-object values', () => {
-      expect(security.base64.encode(12345)).toBeNull()
-      expect(security.base64.encode(true)).toBeNull()
+    it('should return empty string for non-string, non-object values', () => {
+      expect(security.base64.encode(12345)).toBe('')
+      expect(security.base64.encode(true)).toBe('')
     })
 
     it('should decode a base64 encoded string', () => {
